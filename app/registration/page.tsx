@@ -53,7 +53,7 @@ const RegistrationPage = () => {
     } catch (error) {
       toast({
         title: 'Account not created.',
-        description: error?.response?.data?.message || 'Something went wrong',
+        description: 'Something went wrong',
         status: 'error',
         duration: 3000,
         isClosable: true,
