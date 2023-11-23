@@ -1,12 +1,8 @@
-import { setLoading } from "../store/redux/users";
-
+'use client'
 const UserPage = () => {
-  const setLoad = () => {
-    setLoading(true)
-  }
   return (
     <div>
-      <button onClick={setLoad}>setloading</button>
+      <button>Users</button>
     </div>
   )
 };

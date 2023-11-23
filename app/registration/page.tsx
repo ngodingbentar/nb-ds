@@ -9,13 +9,14 @@ import {
   Input,
   Box,
   Button,
+  useToast,
 } from '@chakra-ui/react'
 import { setLoading } from "../store/redux/main";
-import axios from 'axios';
-import { addUser, getUsers } from '../api/users';
+import { addUser } from '../api/users';
 
 const RegistrationPage = () => {
   const dispatch = useDispatch()
+  const toast = useToast()
 
   const setLoad = () => {
     console.log('setloading 1')
@@ -40,9 +41,24 @@ const RegistrationPage = () => {
       await addUser(data)
         .then((res) => {
           console.log('res users', res)
+          toast({
+            title: 'Account created.',
+            description: "We've created your account for you.",
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+            position: 'top-right',
+          })
         })
     } catch (error) {
-      console.log(error)
+      toast({
+        title: 'Account not created.',
+        description: error?.response?.data?.message || 'Something went wrong',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right',
+      })
     }
   }
 
@@ -64,7 +80,6 @@ const RegistrationPage = () => {
         <Box mt={10} display='flex' justifyContent='center'>
           <Button colorScheme='blue' onClick={handleSubmit}>Submit User</Button>
         </Box>
-
       </div>
     </div>
   )

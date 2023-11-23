@@ -1,11 +1,19 @@
 'use client';
 import Sidebar from "@/app/components/SideBar";
+import HeaderComp from "./HeaderComp";
 
 const BaseLayout = ({ children }: { children: React.ReactNode}) => {
   return (
     <div className="layout">
       <Sidebar />
-      <main className="layout__main-content">{children}</main>
+      <main className="layout__main-content">
+        <div>
+          <HeaderComp />
+        </div>
+        <div>
+          {children}
+        </div>
+      </main>
     </div>
   );
 };

@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const API_URL = process.env.API_URL
-console.log('API_URL', API_URL)
 
 const nextConfig = {
   async rewrites() {
@@ -8,8 +7,6 @@ const nextConfig = {
       {
         source: '/api/:path*',
         destination: `${API_URL}/:path*`,
-        // source: '/api/:slug',
-        // destination: `${API_URL}/:slug`,
       },
     ]
   }
