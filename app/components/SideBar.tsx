@@ -1,11 +1,9 @@
 'use client';
 
 import Image from "next/image";
-import { AiOutlineHome } from "react-icons/ai";
-import { BsPeople } from "react-icons/bs";
-import { TiContacts } from "react-icons/ti";
-import { FiMail } from "react-icons/fi";
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import { FaUserFriends, FaSearch } from "react-icons/fa";
+import { TiUserAdd } from "react-icons/ti";
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdSpaceDashboard } from "react-icons/md";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -18,22 +16,22 @@ const sidebarItems = [
   {
     name: "Dashboard",
     href: "/",
-    icon: AiOutlineHome,
+    icon: MdSpaceDashboard,
   },
   {
     name: "Users",
     href: "/users",
-    icon: BsPeople,
+    icon: FaUserFriends,
   },
   {
     name: "Registration",
     href: "/registration",
-    icon: FiMail,
+    icon: TiUserAdd,
   },
   {
     name: "Search",
     href: "/search",
-    icon: TiContacts,
+    icon: FaSearch,
   },
 ];
 

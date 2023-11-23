@@ -18,7 +18,7 @@ const RegistrationPage = () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const isNameError = name === ''
-  const isEmailError = name === ''
+  const isEmailError = email === ''
 
   const handleNameChange = (e: { target: { value: SetStateAction<string>; }; }) => setName(e.target.value)
   const handleEmailChange = (e: { target: { value: SetStateAction<string>; }; }) => setEmail(e.target.value)
@@ -68,8 +68,8 @@ const RegistrationPage = () => {
             {isEmailError && <FormErrorMessage>Please provide email</FormErrorMessage>}
           </FormControl>
         </Box>
-        <Box mt={10} display='flex' justifyContent='center'>
-          <Button colorScheme='blue' onClick={handleSubmit}>Submit User</Button>
+        <Box mt={10} display='flex' justifyContent='end'>
+          <Button colorScheme='blue' onClick={handleSubmit} className={isEmailError || isNameError ? 'btn-disabled' : ''}>Submit User</Button>
         </Box>
       </div>
     </div>
