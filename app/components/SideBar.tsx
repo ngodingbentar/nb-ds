@@ -7,9 +7,11 @@ import { TiContacts } from "react-icons/ti";
 import { FiMail } from "react-icons/fi";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import Link from "next/link";
-import { useContext } from "react";
-import { SidebarContext } from "@/app/context/SidebarContext";
 import { usePathname } from "next/navigation";
+
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux'
+import { setIsCollapsed, setLoading } from "../store/redux/main";
 
 const sidebarItems = [
   {
@@ -34,13 +36,26 @@ const sidebarItems = [
   },
 ];
 
+interface IMain {
+  main : {
+    isCollapsed: boolean,
+    loading: boolean
+  }
+}
+
 const Sidebar = () => {
+  const dispatch = useDispatch()
   const pathname = usePathname()
-  const { isCollapsed, toggleSidebarcollapse } = useContext(SidebarContext);
+
+  const isCollapsed = useSelector((state: IMain) => state?.main?.isCollapsed)
+
+  const doCollapsed = () => {
+    dispatch(setIsCollapsed(''))
+  }
 
   return (
     <div className="sidebar__wrapper">
-      <button className="btn" onClick={toggleSidebarcollapse}>
+      <button className="btn" onClick={doCollapsed}>
         {isCollapsed ? <MdKeyboardArrowRight /> : <MdKeyboardArrowLeft />}
       </button>
       <aside className="sidebar" data-collapse={isCollapsed}>

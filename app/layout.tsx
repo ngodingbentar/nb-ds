@@ -2,8 +2,8 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Providers } from './providers'
-import { SidebarProvider } from './context/SidebarContext'
 import BaseLayout from './components/BaseLayout'
+import ReduxProvider from '@/app/store/provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,11 +21,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Providers>
-          <SidebarProvider>
+          <ReduxProvider>
             <BaseLayout>
               {children}
             </BaseLayout>
-          </SidebarProvider>
+          </ReduxProvider>
         </Providers>
       </body>
     </html>
