@@ -7,11 +7,11 @@ import {
 } from '@chakra-ui/react'
 import { useSelector } from 'react-redux';
 import { CloseIcon } from '@chakra-ui/icons'
-import { IUser } from '../types/main';
+import { IUserStore } from '../types/main';
 import UserItem from './UserItem';
 
 const SearchSide = ({ setShowDetails }: { setShowDetails: any }) => {
-  const userStore = useSelector((state: IUser) => state.users.user)
+  const userStore = useSelector((state: IUserStore) => state.users.user)
 
   return (
     <div className="search-side">

@@ -17,14 +17,14 @@ import { SearchIcon, CloseIcon } from '@chakra-ui/icons'
 import { useDispatch, useSelector } from 'react-redux';
 import { searchUser } from '../api/users';
 import { setLoading, setUser } from '../store/redux/users';
-import { IUser } from '../types/main';
+import { IUserStore } from '../types/main';
 import SearchSide from '../components/SearchSide';
 
 const SearchPage = () => {
   const dispatch = useDispatch()
   const toast = useToast()
-  const userStore = useSelector((state: IUser) => state.users.user)
-  const loading = useSelector((state: IUser) => state.users.loading)
+  const userStore = useSelector((state: IUserStore) => state.users.user)
+  const loading = useSelector((state: IUserStore) => state.users.loading)
 
   const [email, setEmail] = useState('')
   const [showDetails, setShowDetails] = useState(false)
