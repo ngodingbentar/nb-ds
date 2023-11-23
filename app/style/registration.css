@@ -1,0 +1,6 @@
+.registration {
+  display: flex;
+  background-color: rgb(255, 255, 255);
+  justify-content: center;
+  padding-top: 30px;
+}

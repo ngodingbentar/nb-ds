@@ -1,9 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap");
-
+@import './style/registration.css';
 :root {
   --color-bg: #fff;
   --color-border: #e5e7eb;
   --color-sidebar-item: #f3f4f6;
+  --color-bg-gray: #eee;
 }
 
 * {
@@ -13,7 +14,7 @@
 }
 
 body {
-  background-color: #eee;
+  background-color: #fff;
   font-family: "Roboto", sans-serif;
 }
 
@@ -21,7 +22,7 @@ body {
   display: flex;
   height: 100vh;
   position: relative;
-  gap: 2rem;
+  /* gap: 2rem; */
 }
 
 .layout__main-content {
@@ -35,7 +36,7 @@ body {
 .sidebar {
   width: 17rem;
   height: 100%;
-  background-color: var(--color-bg);
+  background-color: var(--color-bg-gray);
   padding: 1rem;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
   overflow: hidden;
@@ -74,7 +75,7 @@ body {
   color: #000;
   padding: 0.8rem 1rem;
   display: flex;
-  background-color: var(--color-sidebar-item);
+  background-color: var(--color-bg);
   margin-bottom: 1rem;
   border-radius: 0.8rem;
 }
