@@ -1,27 +1,18 @@
 'use client';
 import { SetStateAction, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import {
   FormControl,
   FormLabel,
   FormErrorMessage,
-  FormHelperText,
   Input,
   Box,
   Button,
   useToast,
 } from '@chakra-ui/react'
-import { setLoading } from "../store/redux/main";
 import { addUser } from '../api/users';
 
 const RegistrationPage = () => {
-  const dispatch = useDispatch()
   const toast = useToast()
-
-  const setLoad = () => {
-    console.log('setloading 1')
-    dispatch(setLoading(true))
-  }
 
   // form
   const [name, setName] = useState('')

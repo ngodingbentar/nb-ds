@@ -18,6 +18,10 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
+.container {
+  padding: 1rem;
+}
+
 .layout {
   display: flex;
   height: 100vh;
@@ -119,4 +123,11 @@ body {
   cursor: pointer;
   transform: translateX(50%);
   font-size: 1.1rem;
+}
+
+
+
+/* Search page */
+.search__page {
+  margin-top: 1rem;
 }

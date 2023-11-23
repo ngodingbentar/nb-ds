@@ -12,6 +12,7 @@ import { usePathname } from "next/navigation";
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux'
 import { setIsCollapsed, setLoading } from "../store/redux/main";
+import { IMain } from "../types/main";
 
 const sidebarItems = [
   {
@@ -35,13 +36,6 @@ const sidebarItems = [
     icon: TiContacts,
   },
 ];
-
-interface IMain {
-  main : {
-    isCollapsed: boolean,
-    loading: boolean
-  }
-}
 
 const Sidebar = () => {
   const dispatch = useDispatch()

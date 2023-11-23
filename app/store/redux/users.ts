@@ -1,3 +1,4 @@
+import { searchUser } from "@/app/api/users"
 import { createSlice } from "@reduxjs/toolkit"
 
 const userSlice = createSlice({
@@ -6,6 +7,7 @@ const userSlice = createSlice({
     users: [],
     loading: false,
     error: '',
+    user: {},
   },
   reducers: {
     setUsers: (state, action) => {
@@ -17,11 +19,14 @@ const userSlice = createSlice({
       state.users = action.payload
     },
     setLoading: (state, action) => {
-      console.log('setLoading', action.payload)
       state.loading = action.payload
+    },
+    setUser: (state, action) => {
+      console.log('setUser', action.payload)
+      state.user = action.payload
     }
   }
 })
 
-export const { setUsers, setLoading } = userSlice.actions
+export const { setUsers, setLoading, setUser } = userSlice.actions
 export default userSlice.reducer
