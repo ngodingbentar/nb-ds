@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { searchUser } from '../api/users';
 import { setLoading, setUser } from '../store/redux/users';
 import { IUser } from '../types/main';
+import SearchSide from '../components/SearchSide';
 
 const SearchPage = () => {
   const dispatch = useDispatch()
@@ -26,6 +27,7 @@ const SearchPage = () => {
   const loading = useSelector((state: IUser) => state.users.loading)
 
   const [email, setEmail] = useState('')
+  const [showDetails, setShowDetails] = useState(false)
 
   const handleSubmit = async () => {
     dispatch(setLoading(true))
@@ -55,40 +57,46 @@ const SearchPage = () => {
         })
       })
   }
-  const cek = () => {
-    console.log('userStore', userStore)
-    console.log(Object.keys(userStore).length)
-  }
+
   return (
     <div className='container search__page'>
-      <Box>
-        <InputGroup>
-          <InputLeftElement>
-            <SearchIcon color='gray.500'  onClick={handleSubmit} cursor='pointer' />
-          </InputLeftElement>
-          <Input value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Enter amount' onKeyDown={(e) => e.key === 'Enter' && handleSubmit()} />
-          <InputRightElement>
-            <CloseIcon color='gray.500' />
-          </InputRightElement>
-        </InputGroup>
-      </Box>
-      {(!loading && Object.keys(userStore).length > 0) && (
-        <Box marginTop={10}>
-          <Card>
-            <CardBody display='flex' justifyContent='center'>
-                <Box textAlign='center' padding={8}>
-                  <Heading as='h2' size='xl'>
-                    {userStore.name}
-                  </Heading>
-                  <Text marginTop={2} borderBottom='1px' paddingBottom={4} borderColor='gray.500' color='gray.500' paddingX={4}>
-                    {userStore.email}
-                  </Text>
-                  <Box mt={4} display='flex' justifyContent='center'>
-                    <Button colorScheme='blue' onClick={handleSubmit}>View User Profile</Button>
+      <Box maxW={'500px'}>
+        <Box>
+          <InputGroup>
+            <InputLeftElement>
+              <SearchIcon color='gray.500'  onClick={handleSubmit} cursor='pointer' />
+            </InputLeftElement>
+            <Input value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Enter Id' onKeyDown={(e) => e.key === 'Enter' && handleSubmit()} />
+            {email !== '' && (
+              <InputRightElement>
+                <CloseIcon color='gray.500' cursor={'pointer'} onClick={() => setEmail('')} />
+              </InputRightElement>
+            )}
+          </InputGroup>
+        </Box>
+        {(!loading && Object.keys(userStore).length > 0) && (
+          <Box marginTop={10}>
+            <Card>
+              <CardBody display='flex' justifyContent='center'>
+                  <Box textAlign='center' padding={8}>
+                    <Heading as='h2' size='xl'>
+                      {userStore.name}
+                    </Heading>
+                    <Text marginTop={2} borderBottom='1px' paddingBottom={4} borderColor='gray.500' color='gray.500' paddingX={4}>
+                      {userStore.email}
+                    </Text>
+                    <Box mt={4} display='flex' justifyContent='center'>
+                      <Button colorScheme='blue' onClick={() => setShowDetails(true)}>View User Profile</Button>
+                    </Box>
                   </Box>
-                </Box>
-            </CardBody>
-          </Card>
+              </CardBody>
+            </Card>
+          </Box>
+        )}
+      </Box>
+      {showDetails && (
+        <Box>
+          <SearchSide setShowDetails={setShowDetails}  />
         </Box>
       )}
     </div>
