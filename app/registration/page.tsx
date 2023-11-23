@@ -12,6 +12,7 @@ import {
 } from '@chakra-ui/react'
 import { setLoading } from "../store/redux/main";
 import axios from 'axios';
+import { addUser, getUsers } from '../api/users';
 
 const RegistrationPage = () => {
   const dispatch = useDispatch()
@@ -31,46 +32,33 @@ const RegistrationPage = () => {
   const handleEmailChange = (e: { target: { value: SetStateAction<string>; }; }) => setEmail(e.target.value)
 
   const handleSubmit = async () => {
-    console.log('handleSubmit')
-    fetch('/api/users')
-    .then((res) => {
-      console.log(res)
-    })
-    // try {
-    //   await axios.get('/api/users').then((res) => {
-    //     console.log(res.data)
-    //   })
-    // } catch (error) {
-    //   console.log(error)
-    // }
+    const data = {
+      name,
+      email
+    }
+    try {
+      await addUser(data)
+        .then((res) => {
+          console.log('res users', res)
+        })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
     <div className='registration'>
       <div>
-        <button onClick={setLoad}>setloading</button>
         <Box mt={4}>
           <FormControl isInvalid={isNameError}>
             <FormLabel>Name</FormLabel>
             <Input type='text' value={name} onChange={handleNameChange} />
-            {!isNameError ? (
-              <FormHelperText>
-                Enter the email you like to receive the newsletter on.
-              </FormHelperText>
-            ) : (
-              <FormErrorMessage>Please provide name</FormErrorMessage>
-            )}
+            {isNameError && <FormErrorMessage>Please provide name</FormErrorMessage>}
           </FormControl>
           <FormControl isInvalid={isEmailError}>
             <FormLabel>Email</FormLabel>
             <Input type='email' value={email} onChange={handleEmailChange} />
-            {!isEmailError ? (
-              <FormHelperText>
-                Enter the email you like to receive the newsletter on.
-              </FormHelperText>
-            ) : (
-              <FormErrorMessage>Please provide email</FormErrorMessage>
-            )}
+            {isEmailError && <FormErrorMessage>Please provide email</FormErrorMessage>}
           </FormControl>
         </Box>
         <Box mt={10} display='flex' justifyContent='center'>
