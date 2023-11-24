@@ -7,10 +7,11 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 import { Box } from '@chakra-ui/react'
-import { IUser } from '../types/main'
-import columns from './Colums'
+import {columnsUsers, columnsSales} from './Colums'
 
-const TableUsers = ({data}: {data: IUser[]}) => {
+
+const TableLists = ({data, type}: {data: any, type: string }) => {
+  const columns: any = type === 'users' ? columnsUsers : columnsSales
   const table = useReactTable({
     data,
     columns,
@@ -41,13 +42,15 @@ const TableUsers = ({data}: {data: IUser[]}) => {
                           header.getContext()
                         )}
                     {header.column.getCanResize() && (
-                      <div
-                        onMouseDown={header.getResizeHandler()}
-                        onTouchStart={header.getResizeHandler()}
-                        className={`resizer ${
-                          header.column.getIsResizing() ? 'isResizing' : ''
-                        }`}
-                      ></div>
+                      <div>
+                        <div
+                          onMouseDown={header.getResizeHandler()}
+                          onTouchStart={header.getResizeHandler()}
+                          className={`resizer ${
+                            header.column.getIsResizing() ? 'isResizing' : ''
+                          }`}
+                        ></div>
+                      </div>
                     )}
                   </th>
                 )
@@ -78,4 +81,4 @@ const TableUsers = ({data}: {data: IUser[]}) => {
   )
 }
 
-export default TableUsers
+export default TableLists

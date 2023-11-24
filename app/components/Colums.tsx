@@ -1,9 +1,61 @@
+'use client'
+
 import {
   ColumnDef,
 } from '@tanstack/react-table'
-import { IUser } from '../types/main'
+import { IUser, ISales } from '../types/main'
 
-const columns: ColumnDef<IUser>[] = [
+const columnsSales: ColumnDef<ISales>[] = [
+  {
+    accessorKey: 'id',
+    cell: info => info.getValue(),
+    footer: props => props.column.id,
+  },
+  {
+    accessorFn: row => row.name,
+    id: 'name',
+    cell: info => info.getValue(),
+    header: () => <span>Name</span>,
+    footer: props => props.column.id,
+  },
+  {
+    accessorFn: row => row.consumen_name,
+    id: 'consumen_name',
+    cell: info => info.getValue(),
+    header: () => <span>consumen_name</span>,
+    footer: props => props.column.id,
+  },
+  {
+    accessorFn: row => row.item_id,
+    id: 'item_id',
+    cell: info => info.getValue(),
+    header: () => <span>item_id</span>,
+    footer: props => props.column.id,
+  },
+  {
+    accessorFn: row => row.qty,
+    id: 'qty',
+    cell: info => info.getValue(),
+    header: () => <span>qty</span>,
+    footer: props => props.column.id,
+  },
+  {
+    accessorFn: row => row.sales_id,
+    id: 'sales_id',
+    cell: info => info.getValue(),
+    header: () => <span>sales_id</span>,
+    footer: props => props.column.id,
+  },
+  {
+    accessorFn: row => row.transaction_date,
+    id: 'transaction_date',
+    cell: info => info.getValue(),
+    header: () => <span>transaction_date</span>,
+    footer: props => props.column.id,
+  },
+]
+
+const columnsUsers: ColumnDef<IUser>[] = [
   {
     accessorKey: 'id',
     cell: info => info.getValue(),
@@ -74,4 +126,4 @@ const columns: ColumnDef<IUser>[] = [
   },
 ]
 
-export default columns
+export {columnsUsers, columnsSales}

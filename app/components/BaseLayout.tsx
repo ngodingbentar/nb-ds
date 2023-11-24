@@ -10,7 +10,7 @@ const BaseLayout = ({ children }: { children: React.ReactNode}) => {
         <div>
           <HeaderComp />
         </div>
-        <div>
+        <div style={{ maxWidth: '80vw' }}>
           {children}
         </div>
       </main>

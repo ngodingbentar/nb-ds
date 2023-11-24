@@ -175,6 +175,11 @@ tfoot th {
   font-weight: normal;
 }
 
+tr, td {
+  border: 1px solid lightgray;
+  padding: 2px 8px;
+}
+
 .resizer {
   position: absolute;
   right: 0;
@@ -192,7 +197,7 @@ tfoot th {
   opacity: 1;
 }
 
-@media (hover: hover) {
+/* @media (hover: hover) {
   .resizer {
     opacity: 0;
   }
@@ -200,4 +205,4 @@ tfoot th {
   *:hover > .resizer {
     opacity: 1;
   }
-}
+} */

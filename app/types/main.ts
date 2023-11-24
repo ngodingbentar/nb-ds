@@ -45,4 +45,14 @@ interface IUser {
   timezone: string
 }
 
-export type { IMain, IUserStore, IUser }
+interface ISales {
+  id: number
+  name: string
+  consumen_name: string
+  item_id: number
+  qty: number
+  sales_id: string
+  transaction_date: string
+}
+
+export type { IMain, IUserStore, IUser, ISales }
