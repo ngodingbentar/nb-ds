@@ -10,3 +10,14 @@ export const useFetchUsers = () => {
     },
   })
 }
+
+export const useFetchDetailUser = (id: string) => {
+  return useQuery({
+    queryKey: ['user'],
+    enabled: false,
+    queryFn: async () => {
+      const userRes = await axios.get(`/api/${id}`)
+      return userRes.data.data
+    },
+  })
+}

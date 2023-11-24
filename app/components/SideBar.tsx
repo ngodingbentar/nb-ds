@@ -1,16 +1,12 @@
 'use client';
 
+import { useState } from "react";
 import Image from "next/image";
 import { FaUserFriends, FaSearch } from "react-icons/fa";
 import { TiUserAdd } from "react-icons/ti";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdSpaceDashboard } from "react-icons/md";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux'
-import { setIsCollapsed, setLoading } from "../store/redux/main";
-import { IMain } from "../types/main";
 
 const sidebarItems = [
   {
@@ -36,21 +32,15 @@ const sidebarItems = [
 ];
 
 const Sidebar = () => {
-  const dispatch = useDispatch()
   const pathname = usePathname()
-
-  const isCollapsed = useSelector((state: IMain) => state?.main?.isCollapsed)
-
-  const doCollapsed = () => {
-    dispatch(setIsCollapsed(''))
-  }
+  const [collapsed, setCollapsed] = useState(false)
 
   return (
     <div className="sidebar__wrapper">
-      <button className="btn" onClick={doCollapsed}>
-        {isCollapsed ? <MdKeyboardArrowRight /> : <MdKeyboardArrowLeft />}
+      <button className="btn" onClick={() => setCollapsed(!collapsed)}>
+        {collapsed ? <MdKeyboardArrowRight /> : <MdKeyboardArrowLeft />}
       </button>
-      <aside className="sidebar" data-collapse={isCollapsed}>
+      <aside className="sidebar" data-collapse={collapsed}>
         <div className="sidebar__top">
           <Image
             width={80}

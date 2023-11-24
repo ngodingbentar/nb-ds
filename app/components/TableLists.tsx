@@ -9,7 +9,6 @@ import {
 import { Box } from '@chakra-ui/react'
 import {columnsUsers, columnsSales} from './Colums'
 
-
 const TableLists = ({data, type}: {data: any, type: string }) => {
   const columns: any = type === 'users' ? columnsUsers : columnsSales
   const table = useReactTable({

@@ -14,39 +14,23 @@ import {
   Heading,
 } from '@chakra-ui/react'
 import { SearchIcon, CloseIcon } from '@chakra-ui/icons'
-import { useDispatch, useSelector } from 'react-redux';
-import { searchUser } from '../api/users';
-import { setLoading, setUser } from '../store/redux/users';
-import { IUserStore } from '../types/main';
 import SearchSide from '../components/SearchSide';
+import { useQuery } from 'react-query';
+import axios from 'axios';
 
 const SearchPage = () => {
-  const dispatch = useDispatch()
   const toast = useToast()
-  const userStore = useSelector((state: IUserStore) => state.users.user)
-  const loading = useSelector((state: IUserStore) => state.users.loading)
 
   const [email, setEmail] = useState('')
   const [showDetails, setShowDetails] = useState(false)
 
-  const handleSubmit = async () => {
-    dispatch(setLoading(true))
-    
-    await searchUser(email)
-      .then((res) => {
-        console.log('res 123', res)
-        dispatch(setUser(res.data))
-        dispatch(setLoading(false))
-        toast({
-          title: 'Account found.',
-          description: "We've found your account.",
-          status: 'success',
-          duration: 3000,
-          isClosable: true,
-          position: 'top-right',
-        })
-      }).catch((err) => {
-        dispatch(setLoading(false))
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: ['user-detail'],
+    enabled: false,
+    cacheTime: 0,
+    queryFn: async () => {
+      const userRes = await axios.get(`/api/users/${email}`)
+      if(userRes.data.data === null) {
         toast({
           title: 'Account not found.',
           description: "We can't find your account.",
@@ -55,8 +39,23 @@ const SearchPage = () => {
           isClosable: true,
           position: 'top-right',
         })
-      })
-  }
+      }
+      else {
+        toast({
+          title: 'Account found.',
+          description: "We've found your account.",
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right',
+        })
+      }
+      return userRes.data.data
+    },
+  })
+
+  console.log('data', data)
+  console.log('isLoading', isLoading)
 
   return (
     <div className='container search__page'>
@@ -64,9 +63,9 @@ const SearchPage = () => {
         <Box>
           <InputGroup>
             <InputLeftElement>
-              <SearchIcon color='gray.500'  onClick={handleSubmit} cursor='pointer' />
+              <SearchIcon color='gray.500' onClick={() => refetch()} cursor='pointer' />
             </InputLeftElement>
-            <Input value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Enter Id' onKeyDown={(e) => e.key === 'Enter' && handleSubmit()} />
+            <Input value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Enter Id' onKeyDown={(e) => e.key === 'Enter' && refetch()} />
             {email !== '' && (
               <InputRightElement>
                 <CloseIcon color='gray.500' cursor={'pointer'} onClick={() => setEmail('')} />
@@ -74,16 +73,16 @@ const SearchPage = () => {
             )}
           </InputGroup>
         </Box>
-        {(!loading && Object.keys(userStore).length > 0) && (
+        {(!isLoading && data) && (
           <Box marginTop={10}>
             <Card>
               <CardBody display='flex' justifyContent='center'>
                   <Box textAlign='center' padding={8}>
                     <Heading as='h2' size='xl'>
-                      {userStore.name}
+                      {data.name}
                     </Heading>
                     <Text marginTop={2} borderBottom='1px' paddingBottom={4} borderColor='gray.500' color='gray.500' paddingX={4}>
-                      {userStore.email}
+                      {data.email}
                     </Text>
                     <Box mt={4} display='flex' justifyContent='center'>
                       <Button colorScheme='blue' onClick={() => setShowDetails(true)}>View User Profile</Button>
@@ -96,7 +95,7 @@ const SearchPage = () => {
       </Box>
       {showDetails && (
         <Box>
-          <SearchSide setShowDetails={setShowDetails}  />
+          <SearchSide setShowDetails={setShowDetails} data={data}  />
         </Box>
       )}
     </div>

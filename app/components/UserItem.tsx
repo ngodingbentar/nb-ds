@@ -7,7 +7,7 @@ import {
 
 interface IProps {
   title: string
-  item: string
+  item: string | number
 }
 
 const UserItem = ({ title, item }: IProps) => {
