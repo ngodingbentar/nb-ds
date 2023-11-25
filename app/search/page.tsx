@@ -15,9 +15,11 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import { SearchIcon, CloseIcon } from '@chakra-ui/icons'
+import { useDispatch, useSelector } from 'react-redux'
 import SearchSide from '../components/SearchSide';
 import { useFetchUsers } from '../hooks/useFetchUsers';
-import { IUser } from '../types/main';
+import { IUser, IUserStore } from '../types/main';
+import { setUserStore } from '../store/redux/users';
 
 const SearchPage = () => {
   const toast = useToast()
@@ -25,14 +27,18 @@ const SearchPage = () => {
 
   const [email, setEmail] = useState('')
   const [showDetails, setShowDetails] = useState(false)
-  const [user, setUser] = useState({} as IUser)
+  // const [user, setUser] = useState({} as IUser)
   const [loading, setLoading] = useState(false)
+
+  const dispatch = useDispatch()
+  const userStore = useSelector((state: IUserStore) => state.users.userStore) as IUser
 
   function doSearch() {
     setLoading(true)
     const result = data.find((user: IUser) => user.email === email)
     if (result) {
-      setUser(result)
+      // setUser(result)
+      dispatch(setUserStore(result))
       toast({
         title: 'Account found',
         description: "We've found your account.",
@@ -75,16 +81,16 @@ const SearchPage = () => {
             <Spinner color='blue.500' marginRight={2} /> Loading...
           </Box>
         )}
-        {(!loading && Object.keys(user).length > 0) && (
+        {(!loading && Object.keys(userStore).length > 0) && (
           <Box marginTop={10}>
             <Card>
               <CardBody display='flex' justifyContent='center'>
                   <Box textAlign='center' padding={8}>
                     <Heading as='h2' size='xl'>
-                      {user.name}
+                      {userStore.name}
                     </Heading>
                     <Text marginTop={2} borderBottom='1px' paddingBottom={4} borderColor='gray.500' color='gray.500' paddingX={4}>
-                      {user.email}
+                      {userStore.email}
                     </Text>
                     <Box mt={4} display='flex' justifyContent='center'>
                       <Button colorScheme='blue' onClick={() => setShowDetails(true)}>View User Profile</Button>
@@ -97,7 +103,7 @@ const SearchPage = () => {
       </Box>
       {showDetails && (
         <Box>
-          <SearchSide setShowDetails={setShowDetails} data={user}  />
+          <SearchSide setShowDetails={setShowDetails} data={userStore}  />
         </Box>
       )}
     </div>

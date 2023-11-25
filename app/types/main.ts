@@ -7,8 +7,9 @@ interface IMain {
 
 interface IUserStore {
   users: {
-    user: any,
-    loading: boolean
+    users: any,
+    loading: boolean,
+    userStore: object
   }
 }
 
