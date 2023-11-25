@@ -10,7 +10,7 @@ const UserPage = () => {
   return (
     <Box padding='1rem'>
       {isLoading && <Box>Loading</Box>}
-      {!isLoading && (
+      {(!isLoading && data) && (
         <TableLists data={data} type="users" />
       )}
     </Box>
