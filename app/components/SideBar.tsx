@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { FaUserFriends, FaSearch } from "react-icons/fa";
 import { TiUserAdd } from "react-icons/ti";
@@ -33,11 +33,27 @@ const sidebarItems = [
 
 const Sidebar = () => {
   const pathname = usePathname()
-  const [collapsed, setCollapsed] = useState(false)
+  const [collapsed, setCollapsed] = useState(
+    localStorage.getItem('collapsed') === 'true'
+  )
+
+  const doCollapse = () => {
+    localStorage.setItem('collapsed', JSON.stringify(!collapsed))
+    setCollapsed(!collapsed)
+  }
+
+  useEffect(() => {
+    const collapsed = localStorage.getItem('collapsed')
+    if (collapsed) {
+      setCollapsed(JSON.parse(collapsed))
+    }
+    console.log('useEffect')
+  }, [])
+  
 
   return (
     <div className="sidebar__wrapper">
-      <button className="btn" onClick={() => setCollapsed(!collapsed)}>
+      <button className="btn" onClick={doCollapse}>
         {collapsed ? <MdKeyboardArrowRight /> : <MdKeyboardArrowLeft />}
       </button>
       <aside className="sidebar" data-collapse={collapsed}>

@@ -1,5 +1,5 @@
 'use client';
-import { SetStateAction, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import {
   FormControl,
   FormLabel,
@@ -17,8 +17,8 @@ const RegistrationPage = () => {
   // form
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
-  const isNameError = name === ''
-  const isEmailError = email === ''
+  const isNameError = name === '' || !validateName(name)
+  const isEmailError = email === '' || !validateEmail(email)
 
   const handleNameChange = (e: { target: { value: SetStateAction<string>; }; }) => setName(e.target.value)
   const handleEmailChange = (e: { target: { value: SetStateAction<string>; }; }) => setEmail(e.target.value)
@@ -53,16 +53,31 @@ const RegistrationPage = () => {
     }
   }
 
+  function validateName(value: string) {
+    var re = /^([a-zA-Z ]){2,30}$/
+    return re.test(value);
+  }
+
+  function validateEmail(value: string) {
+    var re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    return re.test(value);
+  }
+
+  useEffect(() => {
+    const valid = validateName(name)
+    console.log('valid', valid)
+  }, [name])
+
   return (
     <div className='registration'>
       <div>
         <Box mt={4}>
-          <FormControl isInvalid={isNameError}>
+          <FormControl isInvalid={isNameError} isRequired>
             <FormLabel>Name</FormLabel>
             <Input type='text' value={name} onChange={handleNameChange} />
             {isNameError && <FormErrorMessage>Please provide name</FormErrorMessage>}
           </FormControl>
-          <FormControl isInvalid={isEmailError}>
+          <FormControl isInvalid={isEmailError} isRequired marginTop={4}>
             <FormLabel>Email</FormLabel>
             <Input type='email' value={email} onChange={handleEmailChange} />
             {isEmailError && <FormErrorMessage>Please provide email</FormErrorMessage>}
