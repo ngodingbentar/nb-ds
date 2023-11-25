@@ -1,6 +1,9 @@
 import axios from "axios"
 import { useQuery } from "react-query"
 import { useToast } from '@chakra-ui/react'
+import { IUser } from "../types/main"
+import { useDispatch } from 'react-redux'
+import { setUserStore } from "../store/redux/users"
 
 export const useFetchUsers = () => {
   return useQuery({
@@ -43,5 +46,43 @@ export const useDeleteUser = (id: string) => {
         position: 'top-right',
       })
     }
+  })
+}
+
+export const useSearchUser = (email: string) => {
+  const toast = useToast()
+  const dispatch = useDispatch()
+
+  return useQuery({
+    queryKey: ['search-user'],
+    enabled: false,
+    cacheTime: 0,
+    queryFn: async () => {
+      const userRes = await axios.get('/api/users')
+      const result = userRes.data.data.find((user: IUser) => user.email === email)
+      return result
+    },
+    onSuccess: (data) => {
+      if (data) {
+        dispatch(setUserStore(data))
+        toast({
+          title: 'Account deleted',
+          description: "We've deleted your account.",
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right',
+        })
+      } else {
+        toast({
+          title: 'Account not found',
+          description: "We can't find your account.",
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right',
+        })
+      }
+    },
   })
 }

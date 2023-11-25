@@ -15,50 +15,17 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import { SearchIcon, CloseIcon } from '@chakra-ui/icons'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import SearchSide from '../components/SearchSide';
-import { useFetchUsers } from '../hooks/useFetchUsers';
+import {  useSearchUser } from '../hooks/useFetchUsers';
 import { IUser, IUserStore } from '../types/main';
-import { setUserStore } from '../store/redux/users';
 
 const SearchPage = () => {
-  const toast = useToast()
-  const {data , isLoading} = useFetchUsers()
-
   const [email, setEmail] = useState('')
   const [showDetails, setShowDetails] = useState(false)
-  // const [user, setUser] = useState({} as IUser)
-  const [loading, setLoading] = useState(false)
-
-  const dispatch = useDispatch()
+  const { isLoading, refetch} = useSearchUser(email)
   const userStore = useSelector((state: IUserStore) => state.users.userStore) as IUser
 
-  function doSearch() {
-    setLoading(true)
-    const result = data.find((user: IUser) => user.email === email)
-    if (result) {
-      // setUser(result)
-      dispatch(setUserStore(result))
-      toast({
-        title: 'Account found',
-        description: "We've found your account.",
-        status: 'success',
-        duration: 3000,
-        isClosable: true,
-        position: 'top-right',
-      })
-    } else {
-      toast({
-        title: 'Account not found',
-        description: "We can't find your account.",
-        status: 'error',
-        duration: 3000,
-        isClosable: true,
-        position: 'top-right',
-      })
-    }
-    setLoading(false)
-  }
 
   return (
     <div className='container search__page'>
@@ -66,9 +33,9 @@ const SearchPage = () => {
         <Box>
           <InputGroup>
             <InputLeftElement>
-              <SearchIcon color='gray.500' onClick={() => doSearch()} cursor='pointer' />
+              <SearchIcon color='gray.500' onClick={() => refetch()} cursor='pointer' />
             </InputLeftElement>
-            <Input value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Enter Id' onKeyDown={(e) => e.key === 'Enter' && doSearch()} />
+            <Input value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Enter Id' onKeyDown={(e) => e.key === 'Enter' && refetch()} />
             {email !== '' && (
               <InputRightElement>
                 <CloseIcon color='gray.500' cursor={'pointer'} onClick={() => setEmail('')} />
@@ -76,12 +43,12 @@ const SearchPage = () => {
             )}
           </InputGroup>
         </Box>
-        {loading && (
+        {isLoading && (
           <Box marginTop={10} display='flex' justifyContent='center'>
             <Spinner color='blue.500' marginRight={2} /> Loading...
           </Box>
         )}
-        {(!loading && Object.keys(userStore).length > 0) && (
+        {(!isLoading && Object.keys(userStore).length > 0) && (
           <Box marginTop={10}>
             <Card>
               <CardBody display='flex' justifyContent='center'>
