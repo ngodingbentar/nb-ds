@@ -22,7 +22,6 @@ const SearchPage = () => {
   const [email, setEmail] = useState('')
   const [showDetails, setShowDetails] = useState(false)
   const {data, isLoading, refetch} = useFetchDetailUser(email)
-  console.log('isLoading', isLoading)
 
   return (
     <div className='container search__page'>

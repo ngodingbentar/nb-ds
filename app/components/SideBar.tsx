@@ -33,22 +33,20 @@ const sidebarItems = [
 
 const Sidebar = () => {
   const pathname = usePathname()
-  const [collapsed, setCollapsed] = useState(
-    localStorage.getItem('collapsed') === 'true'
-  )
+  const [collapsed, setCollapsed] = useState(false)
+
+  useEffect(() => {
+    const collapsedLocal = localStorage.getItem('collapsed')
+    if (collapsedLocal) {
+      setCollapsed(JSON.parse(collapsedLocal))
+    }
+    console.log('useEffect', collapsedLocal)
+  }, [])
 
   const doCollapse = () => {
     localStorage.setItem('collapsed', JSON.stringify(!collapsed))
     setCollapsed(!collapsed)
   }
-
-  useEffect(() => {
-    const collapsed = localStorage.getItem('collapsed')
-    if (collapsed) {
-      setCollapsed(JSON.parse(collapsed))
-    }
-    console.log('useEffect')
-  }, [])
   
 
   return (
