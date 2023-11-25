@@ -8,11 +8,9 @@ const mainSlice = createSlice({
   },
   reducers: {
     setLoading: (state, action) => {
-      console.log('setLoading main', action.payload)
       state.loading = action.payload
     },
     setIsCollapsed: (state, action) => {
-      console.log('setIsCollapsed main')
       state.isCollapsed = !state.isCollapsed
     }
   }

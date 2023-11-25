@@ -22,7 +22,6 @@ const userSlice = createSlice({
       state.loading = action.payload
     },
     setUser: (state, action) => {
-      console.log('setUser', action.payload)
       state.user = action.payload
     }
   }

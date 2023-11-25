@@ -31,7 +31,6 @@ const RegistrationPage = () => {
     try {
       await addUser(data)
         .then((res) => {
-          console.log('res users', res)
           toast({
             title: 'Account created.',
             description: "We've created your account for you.",
@@ -62,11 +61,6 @@ const RegistrationPage = () => {
     var re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     return re.test(value);
   }
-
-  useEffect(() => {
-    const valid = validateName(name)
-    console.log('valid', valid)
-  }, [name])
 
   return (
     <div className='registration'>

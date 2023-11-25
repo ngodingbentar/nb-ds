@@ -40,7 +40,6 @@ const Sidebar = () => {
     if (collapsedLocal) {
       setCollapsed(JSON.parse(collapsedLocal))
     }
-    console.log('useEffect', collapsedLocal)
   }, [])
 
   const doCollapse = () => {
