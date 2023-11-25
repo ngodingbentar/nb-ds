@@ -16,7 +16,7 @@ import {
 } from '@chakra-ui/react'
 import { SearchIcon, CloseIcon } from '@chakra-ui/icons'
 import SearchSide from '../components/SearchSide';
-import { useFetchDetailUser, useFetchUsers } from '../hooks/useFetchUsers';
+import { useFetchUsers } from '../hooks/useFetchUsers';
 import { IUser } from '../types/main';
 
 const SearchPage = () => {
@@ -37,7 +37,7 @@ const SearchPage = () => {
         title: 'Account found',
         description: "We've found your account.",
         status: 'success',
-        duration: 9000,
+        duration: 3000,
         isClosable: true,
         position: 'top-right',
       })

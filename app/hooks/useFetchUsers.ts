@@ -12,35 +12,36 @@ export const useFetchUsers = () => {
   })
 }
 
-export const useFetchDetailUser = (id: string) => {
+export const useDeleteUser = (id: string) => {
   const toast = useToast()
 
   return useQuery({
-    queryKey: ['user-detail'],
+    queryKey: ['delete-user', id],
     enabled: false,
+    cacheTime: 0,
     queryFn: async () => {
-      const userRes = await axios.get(`/api/users/${id}`)
-      if(userRes.data.data === null) {
-        toast({
-          title: 'Account not found.',
-          description: "We can't find your account.",
-          status: 'error',
-          duration: 3000,
-          isClosable: true,
-          position: 'top-right',
-        })
-      }
-      else {
-        toast({
-          title: 'Account found.',
-          description: "We've found your account.",
-          status: 'success',
-          duration: 3000,
-          isClosable: true,
-          position: 'top-right',
-        })
-      }
-      return userRes.data.data
+      const userRes = await axios.delete(`/api/users/${id}`)
+      return userRes.data.message
     },
+    onSuccess: () => {
+      toast({
+        title: 'Account deleted',
+        description: "We've deleted your account.",
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right',
+      })
+    },
+    onError: () => {
+      toast({
+        title: 'Account not found',
+        description: "We can't find your account.",
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right',
+      })
+    }
   })
 }
