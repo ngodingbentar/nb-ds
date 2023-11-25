@@ -8,7 +8,9 @@ import {
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      refetchOnWindowFocus: false
+      refetchOnWindowFocus: false,
+      cacheTime: 0,
+      enabled: false
     }
   }
 })

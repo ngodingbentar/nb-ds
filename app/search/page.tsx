@@ -7,54 +7,21 @@ import {
   Input,
   Box,
   Button,
-  useToast,
   Card,
   CardBody,
   Text,
   Heading,
+  Spinner,
 } from '@chakra-ui/react'
 import { SearchIcon, CloseIcon } from '@chakra-ui/icons'
 import SearchSide from '../components/SearchSide';
-import { useQuery } from 'react-query';
-import axios from 'axios';
+import { useFetchDetailUser } from '../hooks/useFetchUsers';
 
 const SearchPage = () => {
-  const toast = useToast()
 
   const [email, setEmail] = useState('')
   const [showDetails, setShowDetails] = useState(false)
-
-  const { data, isLoading, refetch } = useQuery({
-    queryKey: ['user-detail'],
-    enabled: false,
-    cacheTime: 0,
-    queryFn: async () => {
-      const userRes = await axios.get(`/api/users/${email}`)
-      if(userRes.data.data === null) {
-        toast({
-          title: 'Account not found.',
-          description: "We can't find your account.",
-          status: 'error',
-          duration: 3000,
-          isClosable: true,
-          position: 'top-right',
-        })
-      }
-      else {
-        toast({
-          title: 'Account found.',
-          description: "We've found your account.",
-          status: 'success',
-          duration: 3000,
-          isClosable: true,
-          position: 'top-right',
-        })
-      }
-      return userRes.data.data
-    },
-  })
-
-  console.log('data', data)
+  const {data, isLoading, refetch} = useFetchDetailUser(email)
   console.log('isLoading', isLoading)
 
   return (
@@ -73,6 +40,11 @@ const SearchPage = () => {
             )}
           </InputGroup>
         </Box>
+        {isLoading && (
+          <Box marginTop={10} display='flex' justifyContent='center'>
+            <Spinner color='blue.500' marginRight={2} /> Loading...
+          </Box>
+        )}
         {(!isLoading && data) && (
           <Box marginTop={10}>
             <Card>
