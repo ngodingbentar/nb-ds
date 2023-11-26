@@ -12,13 +12,15 @@ import {
   Text,
   Heading,
   Spinner,
-  useToast,
+  FormControl,
+  FormErrorMessage,
 } from '@chakra-ui/react'
 import { SearchIcon, CloseIcon } from '@chakra-ui/icons'
 import { useSelector } from 'react-redux'
 import SearchSide from '../components/SearchSide';
 import {  useSearchUser } from '../hooks/useFetchUsers';
 import { IUser, IUserStore } from '../types/main';
+import { validateEmail } from '../utils/inputValidation';
 
 const SearchPage = () => {
   const [email, setEmail] = useState('')
@@ -26,22 +28,30 @@ const SearchPage = () => {
   const { isLoading, refetch} = useSearchUser(email)
   const userStore = useSelector((state: IUserStore) => state.users.userStore) as IUser
 
+  const isEmailError = email === '' || !validateEmail(email)
+  function handleSearch () {
+    if(isEmailError) return
+    refetch()
+  }
 
   return (
     <div className='container search__page'>
       <Box maxW={'500px'}>
         <Box>
+        <FormControl isInvalid={isEmailError} isRequired>
           <InputGroup>
             <InputLeftElement>
-              <SearchIcon color='gray.500' onClick={() => refetch()} cursor='pointer' />
+              <SearchIcon color='gray.500' onClick={() => handleSearch()} cursor='pointer' />
             </InputLeftElement>
-            <Input value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Enter Id' onKeyDown={(e) => e.key === 'Enter' && refetch()} />
+            <Input value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Input Email' onKeyDown={(e) => e.key === 'Enter' && handleSearch()} />
             {email !== '' && (
               <InputRightElement>
                 <CloseIcon color='gray.500' cursor={'pointer'} onClick={() => setEmail('')} />
               </InputRightElement>
             )}
           </InputGroup>
+          {isEmailError && <FormErrorMessage>Please provide valid email</FormErrorMessage>}
+        </FormControl>
         </Box>
         {isLoading && (
           <Box marginTop={10} display='flex' justifyContent='center'>

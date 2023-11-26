@@ -8,8 +8,10 @@ import {
   Box,
   Button,
   useToast,
+  Spinner,
 } from '@chakra-ui/react'
-import { addUser } from '../api/users';
+import { useAddUser } from '../hooks/useFetchUsers';
+import { validateEmail, validateName } from '../utils/inputValidation';
 
 const RegistrationPage = () => {
   const toast = useToast()
@@ -22,49 +24,16 @@ const RegistrationPage = () => {
 
   const handleNameChange = (e: { target: { value: SetStateAction<string>; }; }) => setName(e.target.value)
   const handleEmailChange = (e: { target: { value: SetStateAction<string>; }; }) => setEmail(e.target.value)
-
-  const handleSubmit = async () => {
-    const data = {
-      name,
-      email
-    }
-    try {
-      await addUser(data)
-        .then((res) => {
-          toast({
-            title: 'Account created.',
-            description: "We've created your account for you.",
-            status: 'success',
-            duration: 3000,
-            isClosable: true,
-            position: 'top-right',
-          })
-        })
-    } catch (error) {
-      toast({
-        title: 'Account not created.',
-        description: 'Something went wrong',
-        status: 'error',
-        duration: 3000,
-        isClosable: true,
-        position: 'top-right',
-      })
-    }
+  
+  const data = {
+    name,
+    email
   }
-
-  function validateName(value: string) {
-    var re = /^([a-zA-Z ]){2,30}$/
-    return re.test(value);
-  }
-
-  function validateEmail(value: string) {
-    var re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    return re.test(value);
-  }
+  const { isLoading, refetch } = useAddUser(data)
 
   return (
     <div className='registration'>
-      <div>
+      <Box>
         <Box mt={4}>
           <FormControl isInvalid={isNameError} isRequired>
             <FormLabel>Name</FormLabel>
@@ -78,9 +47,17 @@ const RegistrationPage = () => {
           </FormControl>
         </Box>
         <Box mt={10} display='flex' justifyContent='end'>
-          <Button colorScheme='blue' onClick={handleSubmit} className={isEmailError || isNameError ? 'btn-disabled' : ''}>Submit User</Button>
+          <Button colorScheme='blue' onClick={() => refetch()} className={(isEmailError || isNameError || isLoading) ? 'btn-disabled' : ''}>
+            {isLoading ? (
+              <Box display='flex' justifyContent='center'>
+                <Spinner color='white' marginRight={2} /> Loading...
+              </Box>
+            ) : (
+              <span>Submit User</span>
+            )}
+          </Button>
         </Box>
-      </div>
+      </Box>
     </div>
   )
 };

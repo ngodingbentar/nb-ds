@@ -9,7 +9,7 @@ const HomePage = () => {
 
   return (
     <Box padding='1rem'>
-      {isLoading && <Box>Loading</Box>}
+      {isLoading && <Box>Loading...</Box>}
       {(!isLoading && data) && (
         <TableLists data={data} type="sales" />
       )}

@@ -86,3 +86,43 @@ export const useSearchUser = (email: string) => {
     },
   })
 }
+
+interface IData {
+  name: string
+  email: string
+}
+export const useAddUser = (data: IData) => {
+  console.log('data', data)
+  const toast = useToast()
+
+  return useQuery({
+    queryKey: ['add-user'],
+    enabled: false,
+    cacheTime: 0,
+    queryFn: async () => {
+      const userRes = await axios.post(`/api/users`, data)
+      console.log('userRes', userRes.data)
+      return userRes.data.data
+    },
+    onSuccess: () => {
+      toast({
+        title: 'Account created.',
+        description: "We've created your account for you.",
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right',
+      })
+    },
+    onError: () => {
+      toast({
+        title: 'Account not created.',
+        description: 'Something went wrong',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right',
+      })
+    }
+  })
+}
