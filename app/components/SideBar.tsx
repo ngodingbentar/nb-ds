@@ -6,9 +6,7 @@ import { FaUserFriends, FaSearch } from "react-icons/fa";
 import { TiUserAdd } from "react-icons/ti";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdSpaceDashboard } from "react-icons/md";
 import Link from "next/link";
-import NextLink from "next/link";
 import { usePathname } from "next/navigation";
-import { useRouter } from 'next/navigation';
 
 const sidebarItems = [
   {
@@ -34,7 +32,6 @@ const sidebarItems = [
 ];
 
 const Sidebar = () => {
-  const router = useRouter();
   const pathname = usePathname()
   const [collapsed, setCollapsed] = useState(false)
 
@@ -49,26 +46,13 @@ const Sidebar = () => {
     localStorage.setItem('collapsed', JSON.stringify(!collapsed))
     setCollapsed(!collapsed)
   }
-  
 
   return (
     <div className="sidebar__wrapper">
       <button className="btn" onClick={doCollapse}>
         {collapsed ? <MdKeyboardArrowRight /> : <MdKeyboardArrowLeft />}
       </button>
-      <div>
-        <NextLink href='/'>Home</NextLink>
-        <NextLink href='/users'>Users</NextLink>
-        <NextLink href='/registration'>registration</NextLink>
-      </div>
-      <div>
-        <button onClick={() => router.push('/')}>Home b</button>
-        <button onClick={() => router.push('/users')}>users b</button>
-        <button onClick={() => router.push('/registration')}>registration b</button>
-        <Link href='/users'>Users a</Link>
-        <Link href='/registration'>registration a</Link>
-      </div>
-      {/* <aside className="sidebar" data-collapse={collapsed}>
+      <aside className="sidebar" data-collapse={collapsed}>
         <div className="sidebar__top">
           <Image
             width={80}
@@ -98,7 +82,7 @@ const Sidebar = () => {
             )
           })}
         </ul>
-      </aside> */}
+      </aside>
     </div>
   );
 };
