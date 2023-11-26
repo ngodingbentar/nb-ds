@@ -6,6 +6,7 @@ import { FaUserFriends, FaSearch } from "react-icons/fa";
 import { TiUserAdd } from "react-icons/ti";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdSpaceDashboard } from "react-icons/md";
 import Link from "next/link";
+import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 
 const sidebarItems = [
@@ -53,9 +54,16 @@ const Sidebar = () => {
       <button className="btn" onClick={doCollapse}>
         {collapsed ? <MdKeyboardArrowRight /> : <MdKeyboardArrowLeft />}
       </button>
-      <Link href='/'>Home</Link>
-      <Link href='/users'>Users</Link>
-      <Link href='/registration'>registration</Link>
+      <div>
+        <NextLink href='/'>Home</NextLink>
+        <NextLink href='/users'>Users</NextLink>
+        <NextLink href='/registration'>registration</NextLink>
+      </div>
+      <div>
+        <Link href='/'>Home a</Link>
+        <Link href='/users'>Users a</Link>
+        <Link href='/registration'>registration a</Link>
+      </div>
       {/* <aside className="sidebar" data-collapse={collapsed}>
         <div className="sidebar__top">
           <Image
