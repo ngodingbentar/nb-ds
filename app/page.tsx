@@ -2,7 +2,7 @@
 import { useFetchSales } from "./hooks/useFetchSales";
 import React from 'react'
 import { Box } from '@chakra-ui/react'
-import TableLists from "./components/TableLists";
+import TableLists from "./components/table/TableLists";
 
 const HomePage = () => {
   const {data, isLoading} = useFetchSales()

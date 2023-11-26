@@ -3,7 +3,7 @@
 import {
   ColumnDef,
 } from '@tanstack/react-table'
-import { IUser, ISales } from '../types/main'
+import { IUser, ISales } from '../../types/main'
 
 const columnsSales: ColumnDef<ISales>[] = [
   {

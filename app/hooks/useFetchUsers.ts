@@ -59,7 +59,7 @@ export const useSearchUser = (email: string) => {
     cacheTime: 0,
     queryFn: async () => {
       const userRes = await axios.get('/api/users')
-      const result = userRes.data.data.find((user: IUser) => user.email === email)
+      const result = userRes.data.data.find((user: IUser) => user.email.toLowerCase() === email.toLowerCase())
       return result
     },
     onSuccess: (data) => {
@@ -92,7 +92,6 @@ interface IData {
   email: string
 }
 export const useAddUser = (data: IData) => {
-  console.log('data', data)
   const toast = useToast()
 
   return useQuery({
@@ -101,7 +100,6 @@ export const useAddUser = (data: IData) => {
     cacheTime: 0,
     queryFn: async () => {
       const userRes = await axios.post(`/api/users`, data)
-      console.log('userRes', userRes.data)
       return userRes.data.data
     },
     onSuccess: () => {

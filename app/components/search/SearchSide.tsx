@@ -7,8 +7,8 @@ import {
 } from '@chakra-ui/react'
 import { CloseIcon } from '@chakra-ui/icons'
 import { IUser } from '../../types/main';
-import UserItem from '../UserItem';
-import SideFooter from '../SideFooter';
+import UserItem from './UserItem';
+import SideFooter from './SideFooter';
 
 const SearchSide = ({ setShowDetails, data }: { setShowDetails: any, data: IUser }) => {
 

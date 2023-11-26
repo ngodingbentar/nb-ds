@@ -2,7 +2,7 @@
 import { useFetchUsers } from "../hooks/useFetchUsers";
 import React from 'react'
 import { Box } from '@chakra-ui/react'
-import TableLists from "../components/TableLists";
+import TableLists from "../components/table/TableLists";
 
 const UserPage = () => {
   const {data, isLoading} = useFetchUsers()
