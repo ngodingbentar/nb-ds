@@ -1,15 +1,27 @@
 'use client';
 import Sidebar from "@/app/components/SideBar";
 import HeaderComp from "./HeaderComp";
+import { usePathname } from "next/navigation";
 
 const BaseLayout = ({ children }: { children: React.ReactNode}) => {
+  const pathname = usePathname()
+  const showSidebar = () => {
+    switch (pathname.slice(1)) {
+      case 'users':
+      case 'registration':
+      case 'search':
+      case '':
+        return true
+      default:
+        return false
+    }
+  }
+
   return (
     <div className="layout">
-      <Sidebar />
+      {showSidebar() && <Sidebar />}
       <main className="layout__main-content">
-        <div>
-          <HeaderComp />
-        </div>
+        {showSidebar() && <HeaderComp />}
         <div style={{ maxWidth: '80vw' }}>
           {children}
         </div>
