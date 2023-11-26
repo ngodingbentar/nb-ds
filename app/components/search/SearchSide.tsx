@@ -4,20 +4,13 @@ import {
   Box,
   Text,
   Heading,
-  Button,
-  Center,
 } from '@chakra-ui/react'
-// import { useSelector } from 'react-redux';
 import { CloseIcon } from '@chakra-ui/icons'
-import { IUser } from '../types/main';
-import UserItem from './UserItem';
-import SideFooter from './SideFooter';
+import { IUser } from '../../types/main';
+import UserItem from '../UserItem';
+import SideFooter from '../SideFooter';
 
 const SearchSide = ({ setShowDetails, data }: { setShowDetails: any, data: IUser }) => {
-  // const userStore = useSelector((state: IUserStore) => state.users.user)
-  // function handleResetUserDetail() {
-
-  // }
 
   return (
     <Box className="search-side">
