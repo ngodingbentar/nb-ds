@@ -53,7 +53,10 @@ const Sidebar = () => {
       <button className="btn" onClick={doCollapse}>
         {collapsed ? <MdKeyboardArrowRight /> : <MdKeyboardArrowLeft />}
       </button>
-      <aside className="sidebar" data-collapse={collapsed}>
+      <Link href='/'>Home</Link>
+      <Link href='/users'>Users</Link>
+      <Link href='/registration'>registration</Link>
+      {/* <aside className="sidebar" data-collapse={collapsed}>
         <div className="sidebar__top">
           <Image
             width={80}
@@ -83,7 +86,7 @@ const Sidebar = () => {
             )
           })}
         </ul>
-      </aside>
+      </aside> */}
     </div>
   );
 };
