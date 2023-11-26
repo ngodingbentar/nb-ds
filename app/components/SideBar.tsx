@@ -8,6 +8,7 @@ import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdSpaceDashboard } from "rea
 import Link from "next/link";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
+import { useRouter } from 'next/navigation';
 
 const sidebarItems = [
   {
@@ -33,6 +34,7 @@ const sidebarItems = [
 ];
 
 const Sidebar = () => {
+  const router = useRouter();
   const pathname = usePathname()
   const [collapsed, setCollapsed] = useState(false)
 
@@ -60,7 +62,9 @@ const Sidebar = () => {
         <NextLink href='/registration'>registration</NextLink>
       </div>
       <div>
-        <Link href='/'>Home a</Link>
+        <button onClick={() => router.push('/')}>Home b</button>
+        <button onClick={() => router.push('/users')}>users b</button>
+        <button onClick={() => router.push('/registration')}>registration b</button>
         <Link href='/users'>Users a</Link>
         <Link href='/registration'>registration a</Link>
       </div>
