@@ -1,5 +1,5 @@
 'use client';
-import Sidebar from "@/app/components/SideBar";
+import Sidebar from "@/app/components/sidebar/SideBar";
 import HeaderComp from "./HeaderComp";
 import { usePathname } from "next/navigation";
 
