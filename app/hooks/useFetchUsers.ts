@@ -66,8 +66,8 @@ export const useSearchUser = (email: string) => {
       if (data) {
         dispatch(setUserStore(data))
         toast({
-          title: 'Account deleted',
-          description: "We've deleted your account.",
+          title: 'Account found',
+          description: "We've found your account.",
           status: 'success',
           duration: 3000,
           isClosable: true,
