@@ -6,7 +6,7 @@ import {
   Button,
   Center,
 } from '@chakra-ui/react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useDeleteUser } from '../../hooks/useFetchUsers';
 import { IUser } from '../../types/main';
 import { setUserStore } from '../../store/redux/users';

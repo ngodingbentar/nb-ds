@@ -9,8 +9,17 @@ import {
   Heading,
 } from '@chakra-ui/react'
 import { IUser } from '@/app/types/main';
+import { useEffect } from 'react';
+import { setUserStore } from '@/app/store/redux/users';
+import { useDispatch } from 'react-redux';
 
 const SearchCard = ({userStore, setShowDetails}: {userStore: IUser, setShowDetails: any}) => {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    return () => {
+      dispatch(setUserStore({} as IUser))
+    }
+  }, [])
   return (
     <Box marginTop={10}>
       <Card>
